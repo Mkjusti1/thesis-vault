@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="api-base" content="http://localhost:5000/api" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — ThesisVault</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <div id="sidebar-placeholder"></div>
+
+      <div class="main-area">
+        <!-- Topbar -->
+        <header class="topbar">
+          <div>
+            <div class="topbar-title">Dashboard</div>
+          </div>
+          <div class="topbar-right">
+            <a href="notifications.html" class="icon-btn">
+              <svg
+                width="17"
+                height="17"
+                fill="none"
+                stroke="var(--navy)"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              <div class="notif-dot"></div>
+            </a>
+            <a href="submit.html" class="btn-primary">
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              New Submission
+            </a>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <!-- Stats -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Submissions</div>
+              <div class="stat-value">1,284</div>
+              <span class="stat-trend trend-up">↑ 12% this term</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Under Review</div>
+              <div class="stat-value">47</div>
+              <span class="stat-trend trend-warn">Avg 8 days</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Approved</div>
+              <div class="stat-value">1,198</div>
+              <span class="stat-trend trend-info">93.3% pass rate</span>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Revisions Due</div>
+              <div class="stat-value">39</div>
+              <span class="stat-trend trend-danger">12 overdue</span>
+            </div>
+          </div>
+
+          <!-- Main grid -->
+          <div class="grid-wide section-gap">
+            <!-- Recent Submissions table -->
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Recent Submissions</span>
+                <a href="submissions.html" class="card-action">View all →</a>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Student</th>
+                      <th>Department</th>
+                      <th>Submitted</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <span style="font-weight: 500"
+                          >Machine Learning in Climate Modelling</span
+                        >
+                      </td>
+                      <td class="td-muted">Chidi Eze</td>
+                      <td class="td-muted">Computer Science</td>
+                      <td class="td-muted">Today, 9:14 AM</td>
+                      <td><span class="badge badge-amber">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span style="font-weight: 500"
+                          >Post-Colonial Literature in West Africa</span
+                        >
+                      </td>
+                      <td class="td-muted">Fatima Al-Hassan</td>
+                      <td class="td-muted">Humanities</td>
+                      <td class="td-muted">Yesterday</td>
+                      <td><span class="badge badge-green">Approved</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span style="font-weight: 500"
+                          >Nanoparticle Drug Delivery Systems</span
+                        >
+                      </td>
+                      <td class="td-muted">Seun Adeyemi</td>
+                      <td class="td-muted">Biochemistry</td>
+                      <td class="td-muted">Mar 11</td>
+                      <td><span class="badge badge-red">Revision</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span style="font-weight: 500"
+                          >Urban Planning & Housing Policy</span
+                        >
+                      </td>
+                      <td class="td-muted">Kemi Bello</td>
+                      <td class="td-muted">Architecture</td>
+                      <td class="td-muted">Mar 10</td>
+                      <td><span class="badge badge-blue">In Review</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <span style="font-weight: 500"
+                          >AI-Driven Urban Traffic Optimization</span
+                        >
+                      </td>
+                      <td class="td-muted">Adaora Okafor</td>
+                      <td class="td-muted">Computer Science</td>
+                      <td class="td-muted">Feb 14</td>
+                      <td><span class="badge badge-blue">In Review</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right column -->
+            <div style="display: flex; flex-direction: column; gap: 22px">
+              <!-- My submission progress -->
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">My Submission Progress</span>
+                </div>
+                <div class="card-body">
+                  <p
+                    style="
+                      font-size: 12.5px;
+                      color: var(--muted);
+                      margin-bottom: 16px;
+                    "
+                  >
+                    AI-Driven Urban Traffic Optimization
+                  </p>
+                  <div class="timeline">
+                    <div class="timeline-item">
+                      <div class="timeline-left">
+                        <div class="timeline-dot dot-done">✓</div>
+                        <div class="timeline-line line-done"></div>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">Draft Submitted</div>
+                        <div class="timeline-date">Feb 14, 2026</div>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-left">
+                        <div class="timeline-dot dot-done">✓</div>
+                        <div class="timeline-line line-done"></div>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">Supervisor Review</div>
+                        <div class="timeline-date">Feb 22, 2026</div>
+                        <div class="timeline-note">
+                          Prof. Obi approved with minor notes
+                        </div>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-left">
+                        <div class="timeline-dot dot-active">3</div>
+                        <div class="timeline-line line-active"></div>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">Examiner Panel Review</div>
+                        <div
+                          class="timeline-date"
+                          style="color: var(--gold); font-weight: 500"
+                        >
+                          In progress
+                        </div>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-left">
+                        <div class="timeline-dot dot-pending">4</div>
+                        <div class="timeline-line line-pending"></div>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">Ethics Clearance</div>
+                        <div class="timeline-date">Awaiting</div>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-left">
+                        <div class="timeline-dot dot-pending">5</div>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">Final Approval</div>
+                        <div class="timeline-date">Awaiting</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Review Panel -->
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">Review Panel</span>
+                  <a href="reviews.html" class="card-action">View →</a>
+                </div>
+                <div class="card-body">
+                  <div class="reviewer-row">
+                    <div
+                      class="reviewer-av"
+                      style="background: #e6f1fb; color: #185fa5"
+                    >
+                      PS
+                    </div>
+                    <div>
+                      <div class="reviewer-name">Prof. Samuel Obi</div>
+                      <div class="reviewer-role">
+                        Supervisor · Comp. Science
+                      </div>
+                    </div>
+                    <div class="reviewer-status">
+                      <span class="badge badge-green">Approved</span>
+                    </div>
+                  </div>
+                  <div class="reviewer-row">
+                    <div
+                      class="reviewer-av"
+                      style="background: #faeeda; color: #854f0b"
+                    >
+                      AN
+                    </div>
+                    <div>
+                      <div class="reviewer-name">Dr. Amina Nwosu</div>
+                      <div class="reviewer-role">External Examiner</div>
+                    </div>
+                    <div class="reviewer-status">
+                      <span class="badge badge-amber">Reviewing</span>
+                    </div>
+                  </div>
+                  <div class="reviewer-row">
+                    <div
+                      class="reviewer-av"
+                      style="background: #fcebeb; color: #a32d2d"
+                    >
+                      JT
+                    </div>
+                    <div>
+                      <div class="reviewer-name">Dr. James Tunde</div>
+                      <div class="reviewer-role">Ethics Board</div>
+                    </div>
+                    <div class="reviewer-status">
+                      <span class="badge badge-blue">Pending</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming deadlines -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Upcoming Deadlines</span>
+              <a href="settings.html" class="card-action">Manage →</a>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Milestone</th>
+                    <th>Thesis</th>
+                    <th>Student</th>
+                    <th>Deadline</th>
+                    <th>Days Left</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ethics Form Submission</td>
+                    <td class="td-muted">AI-Driven Urban Traffic</td>
+                    <td class="td-muted">Adaora Okafor</td>
+                    <td class="td-muted">Mar 18, 2026</td>
+                    <td><span class="badge badge-amber">5 days</span></td>
+                  </tr>
+                  <tr>
+                    <td>Revision Deadline</td>
+                    <td class="td-muted">Nanoparticle Drug Delivery</td>
+                    <td class="td-muted">Seun Adeyemi</td>
+                    <td class="td-muted">Mar 20, 2026</td>
+                    <td><span class="badge badge-amber">7 days</span></td>
+                  </tr>
+                  <tr>
+                    <td>Final Submission</td>
+                    <td class="td-muted">Urban Planning & Housing</td>
+                    <td class="td-muted">Kemi Bello</td>
+                    <td class="td-muted">Mar 31, 2026</td>
+                    <td><span class="badge badge-green">18 days</span></td>
+                  </tr>
+                  <tr>
+                    <td>Viva Voce Defence</td>
+                    <td class="td-muted">ML in Climate Modelling</td>
+                    <td class="td-muted">Chidi Eze</td>
+                    <td class="td-muted">Apr 5, 2026</td>
+                    <td><span class="badge badge-blue">23 days</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

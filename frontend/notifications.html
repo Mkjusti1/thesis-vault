@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="api-base" content="http://localhost:5000/api" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notifications — ThesisVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar-placeholder"></div>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-title">Notifications</div>
+      <div class="topbar-right">
+        <button class="btn-secondary" style="font-size:13px;" onclick="markAllRead()">Mark all as read</button>
+      </div>
+    </header>
+
+    <div class="page-content" style="max-width:780px;">
+
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:24px;">You have <strong id="unread-count" style="color:var(--navy);">5 unread</strong> notifications.</p>
+
+      <!-- Today -->
+      <p style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-bottom:12px;">Today</p>
+      <div class="card section-gap">
+        <div class="card-body" style="padding:0;">
+
+          <div class="notif-item notif-unread" style="padding:16px 20px;">
+            <div class="notif-indicator" style="background:#1D9E75;"></div>
+            <div style="flex:1;">
+              <div class="notif-text">
+                <strong>Prof. Samuel Obi</strong> approved Chapter 4 of your thesis <em>AI-Driven Urban Traffic Optimization</em>.
+              </div>
+              <div class="notif-time">Today, 10:42 AM</div>
+            </div>
+            <a href="reviews.html" style="font-size:12.5px;color:var(--gold);white-space:nowrap;font-weight:500;text-decoration:none;">View →</a>
+          </div>
+
+          <div class="notif-item notif-unread" style="padding:16px 20px;">
+            <div class="notif-indicator" style="background:#c9922a;"></div>
+            <div style="flex:1;">
+              <div class="notif-text">
+                <strong>Deadline Reminder:</strong> Ethics clearance form for <em>AI-Driven Urban Traffic Optimization</em> is due in <strong>5 days</strong> (March 18).
+              </div>
+              <div class="notif-time">Today, 8:00 AM</div>
+            </div>
+            <a href="submit.html" style="font-size:12.5px;color:var(--gold);white-space:nowrap;font-weight:500;text-decoration:none;">Upload →</a>
+          </div>
+
+          <div class="notif-item notif-unread" style="padding:16px 20px;">
+            <div class="notif-indicator" style="background:#185fa5;"></div>
+            <div style="flex:1;">
+              <div class="notif-text">
+                <strong>Dr. Amina Nwosu</strong> left 3 comments on your thesis. Please review and respond.
+              </div>
+              <div class="notif-time">Today, 7:30 AM</div>
+            </div>
+            <a href="reviews.html" style="font-size:12.5px;color:var(--gold);white-space:nowrap;font-weight:500;text-decoration:none;">View →</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Yesterday -->
+      <p style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-bottom:12px;">Yesterday</p>
+      <div class="card section-gap">
+        <div class="card-body" style="padding:0;">
+
+          <div class="notif-item notif-unread" style="padding:16px 20px;">
+            <div class="notif-indicator" style="background:#e24b4a;"></div>
+            <div style="flex:1;">
+              <div class="notif-text">
+                <strong>Revision Required:</strong> Your thesis <em>Predictive Modelling for Malaria Outbreaks</em> has been returned for revision. Due March 20.
+              </div>
+              <div class="notif-time">Mar 12, 4:15 PM</div>
+            </div>
+            <a href="submissions.html" style="font-size:12.5px;color:var(--gold);white-space:nowrap;font-weight:500;text-decoration:none;">View →</a>
+          </div>
+
+          <div class="notif-item notif-unread" style="padding:16px 20px;">
+            <div class="notif-indicator" style="background:#185fa5;"></div>
+            <div style="flex:1;">
+              <div class="notif-text">
+                <strong>Dr. James Tunde</strong> (Ethics Board) has been assigned to review your submission.
+              </div>
+              <div class="notif-time">Mar 12, 9:20 AM</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Earlier -->
+      <p style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-bottom:12px;">Earlier</p>
+      <div class="card">
+        <div class="card-body" style="padding:0;">
+
+          <div class="notif-item" style="padding:16px 20px;">
+            <div class="notif-indicator" style="background:#1D9E75;"></div>
+            <div style="flex:1;">
+              <div class="notif-text" style="color:var(--muted);">Your thesis <em>AI-Driven Urban Traffic Optimization</em> was successfully submitted and assigned to reviewers.</div>
+              <div class="notif-time">Feb 14, 2026</div>
+            </div>
+          </div>
+
+          <div class="notif-item" style="padding:16px 20px;">
+            <div class="notif-indicator" style="background:#c9922a;"></div>
+            <div style="flex:1;">
+              <div class="notif-text" style="color:var(--muted);">Your account was verified and portal access activated.</div>
+              <div class="notif-time">Jan 2, 2026</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script>
+function markAllRead() {
+  document.querySelectorAll('.notif-unread').forEach(el => {
+    el.classList.remove('notif-unread');
+    el.querySelector('.notif-text').style.fontWeight = 'normal';
+  });
+  document.getElementById('unread-count').textContent = '0 unread';
+  showToast('All notifications marked as read', '✓');
+}
+</script>
+</body>
+</html>

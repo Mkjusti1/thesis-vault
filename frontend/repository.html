@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="api-base" content="http://localhost:5000/api" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repository — ThesisVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .thesis-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-sm);
+      transition: transform 0.18s, box-shadow 0.18s; cursor: pointer;
+    }
+    .thesis-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .thesis-card h3 { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--navy); margin-bottom: 8px; line-height: 1.4; }
+    .thesis-card .meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+    .thesis-card .meta span { font-size: 12.5px; color: var(--muted); }
+    .thesis-card p { font-size: 13.5px; color: var(--navy); line-height: 1.7; }
+    .thesis-card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag { font-size: 11.5px; padding: 3px 9px; border-radius: 20px; background: var(--cream-dark); color: var(--muted); border: 1px solid var(--border); }
+    .thesis-card .actions { display: flex; gap: 10px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar-placeholder"></div>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-title">Thesis Repository</div>
+      <div class="topbar-right">
+        <span style="font-size:13px;color:var(--muted);">1,198 published theses</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <!-- Search bar -->
+      <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+        <div class="search-bar" style="flex:1;min-width:240px;">
+          <svg width="16" height="16" fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-input" placeholder="Search by title, author, keyword, department…" oninput="filterTheses()" />
+        </div>
+        <select class="form-select" style="width:180px;" id="dept-filter" onchange="filterTheses()">
+          <option value="">All Departments</option>
+          <option>Computer Science</option>
+          <option>Biochemistry</option>
+          <option>Architecture</option>
+          <option>Humanities</option>
+          <option>Epidemiology</option>
+          <option>Engineering</option>
+          <option>Economics</option>
+          <option>Medicine</option>
+        </select>
+        <select class="form-select" style="width:150px;" id="year-filter" onchange="filterTheses()">
+          <option value="">All Years</option>
+          <option>2025–2026</option>
+          <option>2024–2025</option>
+          <option>2023–2024</option>
+        </select>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="filter-row">
+        <div class="filter-chip active" data-filter="all" onclick="setFilter('all')">All Theses</div>
+        <div class="filter-chip" data-filter="phd" onclick="setFilter('phd')">PhD</div>
+        <div class="filter-chip" data-filter="mphil" onclick="setFilter('mphil')">MPhil</div>
+        <div class="filter-chip" data-filter="msc" onclick="setFilter('msc')">MSc by Research</div>
+        <div class="filter-chip" data-filter="recent" onclick="setFilter('recent')">Most Recent</div>
+      </div>
+
+      <!-- Results count -->
+      <p id="results-count" style="font-size:13px;color:var(--muted);margin-bottom:18px;">Showing 6 of 1,198 theses</p>
+
+      <!-- Thesis grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" id="thesis-grid">
+
+        <div class="thesis-card" data-dept="Computer Science" data-degree="phd">
+          <h3>AI-Driven Urban Traffic Optimization Using Reinforcement Learning</h3>
+          <div class="meta">
+            <span>Adaora Okafor</span>
+            <span>PhD · Computer Science</span>
+            <span>2025–2026</span>
+          </div>
+          <p>Investigates the application of reinforcement learning algorithms to real-time urban traffic management, with field trials in Lagos and Abuja metropolitan areas…</p>
+          <div class="tags">
+            <span class="tag">Machine Learning</span>
+            <span class="tag">Traffic Systems</span>
+            <span class="tag">Urban AI</span>
+            <span class="tag">Reinforcement Learning</span>
+          </div>
+          <div class="actions">
+            <button class="btn-secondary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Opening abstract…', '📄')">View Abstract</button>
+            <button class="btn-primary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Downloading PDF…', '⬇️')">Download PDF</button>
+          </div>
+        </div>
+
+        <div class="thesis-card" data-dept="Humanities" data-degree="phd">
+          <h3>Post-Colonial Identities in Contemporary West African Literature</h3>
+          <div class="meta">
+            <span>Fatima Al-Hassan</span>
+            <span>PhD · Humanities</span>
+            <span>2024–2025</span>
+          </div>
+          <p>A critical examination of how post-colonial identities are constructed and contested in contemporary novels from Nigeria, Ghana, and Senegal, focusing on Chimamanda Adichie…</p>
+          <div class="tags">
+            <span class="tag">Post-Colonialism</span>
+            <span class="tag">African Literature</span>
+            <span class="tag">Identity</span>
+          </div>
+          <div class="actions">
+            <button class="btn-secondary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Opening abstract…', '📄')">View Abstract</button>
+            <button class="btn-primary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Downloading PDF…', '⬇️')">Download PDF</button>
+          </div>
+        </div>
+
+        <div class="thesis-card" data-dept="Biochemistry" data-degree="phd">
+          <h3>Nanoparticle-Mediated Drug Delivery Across the Blood-Brain Barrier</h3>
+          <div class="meta">
+            <span>Seun Adeyemi</span>
+            <span>PhD · Biochemistry</span>
+            <span>2024–2025</span>
+          </div>
+          <p>Explores the synthesis and characterisation of lipid nanoparticles designed to cross the blood-brain barrier for targeted glioblastoma treatment in murine models…</p>
+          <div class="tags">
+            <span class="tag">Nanoparticles</span>
+            <span class="tag">Drug Delivery</span>
+            <span class="tag">Neuroscience</span>
+            <span class="tag">Cancer</span>
+          </div>
+          <div class="actions">
+            <button class="btn-secondary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Opening abstract…', '📄')">View Abstract</button>
+            <button class="btn-primary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Downloading PDF…', '⬇️')">Download PDF</button>
+          </div>
+        </div>
+
+        <div class="thesis-card" data-dept="Architecture" data-degree="mphil">
+          <h3>Affordable Housing Policy and Urban Sprawl in Lagos Metropolis</h3>
+          <div class="meta">
+            <span>Kemi Bello</span>
+            <span>MPhil · Architecture</span>
+            <span>2024–2025</span>
+          </div>
+          <p>Analyses the impact of Federal Government housing policy on informal settlement patterns and urban sprawl across the Lagos Metropolitan Area, 2000–2024…</p>
+          <div class="tags">
+            <span class="tag">Urban Planning</span>
+            <span class="tag">Housing Policy</span>
+            <span class="tag">Lagos</span>
+          </div>
+          <div class="actions">
+            <button class="btn-secondary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Opening abstract…', '📄')">View Abstract</button>
+            <button class="btn-primary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Downloading PDF…', '⬇️')">Download PDF</button>
+          </div>
+        </div>
+
+        <div class="thesis-card" data-dept="Epidemiology" data-degree="phd">
+          <h3>Climate-Driven Predictive Modelling for Malaria Outbreak Forecasting</h3>
+          <div class="meta">
+            <span>Adaora Okafor</span>
+            <span>PhD · Epidemiology</span>
+            <span>2025–2026</span>
+          </div>
+          <p>Develops a spatiotemporal machine learning model integrating satellite climate data and healthcare utilisation records to predict seasonal malaria outbreaks in sub-Saharan Africa…</p>
+          <div class="tags">
+            <span class="tag">Malaria</span>
+            <span class="tag">Epidemiology</span>
+            <span class="tag">Predictive Modelling</span>
+            <span class="tag">Climate</span>
+          </div>
+          <div class="actions">
+            <button class="btn-secondary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Opening abstract…', '📄')">View Abstract</button>
+            <button class="btn-primary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Downloading PDF…', '⬇️')">Download PDF</button>
+          </div>
+        </div>
+
+        <div class="thesis-card" data-dept="Engineering" data-degree="msc">
+          <h3>Solar Microgrid Design for Rural Electrification in Northern Nigeria</h3>
+          <div class="meta">
+            <span>Emeka Okonkwo</span>
+            <span>MSc by Research · Engineering</span>
+            <span>2023–2024</span>
+          </div>
+          <p>A technical and economic feasibility study for solar-powered community microgrids in Kano and Kaduna states, evaluating battery storage and demand-side management strategies…</p>
+          <div class="tags">
+            <span class="tag">Solar Energy</span>
+            <span class="tag">Microgrid</span>
+            <span class="tag">Rural Electrification</span>
+          </div>
+          <div class="actions">
+            <button class="btn-secondary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Opening abstract…', '📄')">View Abstract</button>
+            <button class="btn-primary" style="font-size:12.5px;padding:7px 14px;" onclick="showToast('Downloading PDF…', '⬇️')">Download PDF</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Load more -->
+      <div style="text-align:center;margin-top:32px;">
+        <button class="btn-secondary" onclick="showToast('Loading more theses…', '📚')" style="padding:10px 28px;">Load More Theses</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script>
+let activeFilter = 'all';
+
+function setFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.filter === f);
+  });
+  filterTheses();
+}
+
+function filterTheses() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const dept = document.getElementById('dept-filter').value.toLowerCase();
+  const cards = document.querySelectorAll('.thesis-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    const cardDept = (card.dataset.dept || '').toLowerCase();
+    const cardDegree = (card.dataset.degree || '').toLowerCase();
+    const matchSearch = !q || text.includes(q);
+    const matchDept = !dept || cardDept === dept;
+    const matchDegree = activeFilter === 'all' || activeFilter === 'recent' || cardDegree === activeFilter;
+    const show = matchSearch && matchDept && matchDegree;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('results-count').textContent = `Showing ${visible} of 1,198 theses`;
+}
+</script>
+</body>
+</html>

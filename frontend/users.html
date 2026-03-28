@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="api-base" content="http://localhost:5000/api" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Users — ThesisVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar-placeholder"></div>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-title">Manage Users</div>
+      <div class="topbar-right">
+        <button class="btn-primary" onclick="showToast('Invite sent!', '📧')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Invite User
+        </button>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:28px;">
+        <div class="stat-card">
+          <div class="stat-label">Total Users</div>
+          <div class="stat-value">312</div>
+          <span class="stat-trend trend-info">All roles</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">PhD Students</div>
+          <div class="stat-value">187</div>
+          <span class="stat-trend trend-up">Active</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Supervisors</div>
+          <div class="stat-value">64</div>
+          <span class="stat-trend trend-info">Faculty</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Examiners</div>
+          <div class="stat-value">48</div>
+          <span class="stat-trend trend-warn">Active</span>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div style="display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
+        <div class="search-bar" style="flex:1;min-width:220px;">
+          <svg width="15" height="15" fill="none" stroke="var(--muted)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Search users by name, email, department…" />
+        </div>
+        <select class="form-select" style="width:160px;">
+          <option>All Roles</option>
+          <option>Student</option>
+          <option>Supervisor</option>
+          <option>Examiner</option>
+          <option>Admin</option>
+        </select>
+        <select class="form-select" style="width:180px;">
+          <option>All Departments</option>
+          <option>Computer Science</option>
+          <option>Biochemistry</option>
+          <option>Humanities</option>
+          <option>Architecture</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Submissions</th>
+                <th>Last Active</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#e6f1fb;display:flex;align-items:center;justify-content:center;font-size:12px;color:#185fa5;font-weight:500;flex-shrink:0;">AO</div>
+                    <div>
+                      <div style="font-weight:500;font-size:13.5px;">Adaora Okafor</div>
+                      <div style="font-size:12px;color:var(--muted);">a.okafor@uni.edu.ng</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-blue">Student</span></td>
+                <td class="td-muted">Computer Science</td>
+                <td class="td-muted">2</td>
+                <td class="td-muted">Today</td>
+                <td><span class="badge badge-green">Active</span></td>
+                <td><button class="file-action" onclick="showToast('Viewing profile…')">View</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#eaf3de;display:flex;align-items:center;justify-content:center;font-size:12px;color:#3b6d11;font-weight:500;flex-shrink:0;">PS</div>
+                    <div>
+                      <div style="font-weight:500;font-size:13.5px;">Prof. Samuel Obi</div>
+                      <div style="font-size:12px;color:var(--muted);">s.obi@uni.edu.ng</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-green">Supervisor</span></td>
+                <td class="td-muted">Computer Science</td>
+                <td class="td-muted">14 supervised</td>
+                <td class="td-muted">Today</td>
+                <td><span class="badge badge-green">Active</span></td>
+                <td><button class="file-action" onclick="showToast('Viewing profile…')">View</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#faeeda;display:flex;align-items:center;justify-content:center;font-size:12px;color:#854f0b;font-weight:500;flex-shrink:0;">AN</div>
+                    <div>
+                      <div style="font-weight:500;font-size:13.5px;">Dr. Amina Nwosu</div>
+                      <div style="font-size:12px;color:var(--muted);">a.nwosu@unilag.edu.ng</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-amber">Examiner</span></td>
+                <td class="td-muted">External</td>
+                <td class="td-muted">7 examined</td>
+                <td class="td-muted">Yesterday</td>
+                <td><span class="badge badge-green">Active</span></td>
+                <td><button class="file-action" onclick="showToast('Viewing profile…')">View</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#fcebeb;display:flex;align-items:center;justify-content:center;font-size:12px;color:#a32d2d;font-weight:500;flex-shrink:0;">CE</div>
+                    <div>
+                      <div style="font-weight:500;font-size:13.5px;">Chidi Eze</div>
+                      <div style="font-size:12px;color:var(--muted);">c.eze@uni.edu.ng</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-blue">Student</span></td>
+                <td class="td-muted">Computer Science</td>
+                <td class="td-muted">1</td>
+                <td class="td-muted">Today</td>
+                <td><span class="badge badge-amber">Pending Verify</span></td>
+                <td><button class="file-action" onclick="showToast('Viewing profile…')">View</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#f1efe8;display:flex;align-items:center;justify-content:center;font-size:12px;color:#5f5e5a;font-weight:500;flex-shrink:0;">KB</div>
+                    <div>
+                      <div style="font-weight:500;font-size:13.5px;">Kemi Bello</div>
+                      <div style="font-size:12px;color:var(--muted);">k.bello@uni.edu.ng</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-blue">Student</span></td>
+                <td class="td-muted">Architecture</td>
+                <td class="td-muted">1</td>
+                <td class="td-muted">Mar 10</td>
+                <td><span class="badge badge-green">Active</span></td>
+                <td><button class="file-action" onclick="showToast('Viewing profile…')">View</button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:#eaf3de;display:flex;align-items:center;justify-content:center;font-size:12px;color:#3b6d11;font-weight:500;flex-shrink:0;">FA</div>
+                    <div>
+                      <div style="font-weight:500;font-size:13.5px;">Fatima Al-Hassan</div>
+                      <div style="font-size:12px;color:var(--muted);">f.alhassan@uni.edu.ng</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge badge-blue">Student</span></td>
+                <td class="td-muted">Humanities</td>
+                <td class="td-muted">1</td>
+                <td class="td-muted">Mar 12</td>
+                <td><span class="badge badge-green">Active</span></td>
+                <td><button class="file-action" onclick="showToast('Viewing profile…')">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

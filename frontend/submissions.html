@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="api-base" content="http://localhost:5000/api" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Submissions — ThesisVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar-placeholder"></div>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-title">My Submissions</div>
+      <div class="topbar-right">
+        <a href="submit.html" class="btn-primary">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Submission
+        </a>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);max-width:680px;margin-bottom:28px;">
+        <div class="stat-card">
+          <div class="stat-label">Total</div>
+          <div class="stat-value">2</div>
+          <span class="stat-trend trend-info">Active</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">In Review</div>
+          <div class="stat-value">1</div>
+          <span class="stat-trend trend-warn">Examiner panel</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Revisions</div>
+          <div class="stat-value">1</div>
+          <span class="stat-trend trend-danger">Due Mar 20</span>
+        </div>
+      </div>
+
+      <!-- Submission Cards -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Submission 1 -->
+        <div class="card">
+          <div class="card-body" style="padding:24px;">
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:46px;height:46px;border-radius:var(--radius-md);background:#e6f1fb;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="20" height="20" fill="none" stroke="#185fa5" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;">
+                  <h3 style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy);">AI-Driven Urban Traffic Optimization</h3>
+                  <span class="badge badge-blue">In Review</span>
+                </div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;">
+                  <span style="font-size:13px;color:var(--muted);">PhD · Computer Science</span>
+                  <span style="font-size:13px;color:var(--muted);">Submitted Feb 14, 2026</span>
+                  <span style="font-size:13px;color:var(--muted);">v2.4</span>
+                </div>
+                <p style="font-size:13.5px;color:var(--navy);line-height:1.7;margin-bottom:16px;max-width:700px;">
+                  This thesis investigates the application of reinforcement learning algorithms to real-time urban traffic management systems, with field trials conducted in Lagos and Abuja metropolitan areas…
+                </p>
+                <!-- Progress bar -->
+                <div style="margin-bottom:16px;">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                    <span style="font-size:12px;color:var(--muted);">Progress</span>
+                    <span style="font-size:12px;font-weight:500;color:var(--gold);">60% — Examiner Panel Review</span>
+                  </div>
+                  <div style="height:6px;background:var(--cream-dark);border-radius:20px;overflow:hidden;">
+                    <div style="height:100%;width:60%;background:var(--gold);border-radius:20px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px;">
+                  <a href="reviews.html" class="btn-primary" style="padding:8px 16px;font-size:13px;">View Reviews</a>
+                  <a href="submit.html" class="btn-secondary" style="padding:8px 16px;font-size:13px;">Upload Revision</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--border);padding:14px 24px;display:flex;gap:24px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:24px;height:24px;border-radius:50%;background:#e6f1fb;display:flex;align-items:center;justify-content:center;font-size:9px;color:#185fa5;font-weight:500;">PS</div>
+              <span style="font-size:12.5px;color:var(--muted);">Prof. Samuel Obi · <span style="color:#3b6d11;">Approved</span></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:24px;height:24px;border-radius:50%;background:#faeeda;display:flex;align-items:center;justify-content:center;font-size:9px;color:#854f0b;font-weight:500;">AN</div>
+              <span style="font-size:12.5px;color:var(--muted);">Dr. Amina Nwosu · <span style="color:#854f0b;">Reviewing</span></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:24px;height:24px;border-radius:50%;background:#fcebeb;display:flex;align-items:center;justify-content:center;font-size:9px;color:#a32d2d;font-weight:500;">JT</div>
+              <span style="font-size:12.5px;color:var(--muted);">Dr. James Tunde · <span style="color:#b4b2a9;">Pending</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submission 2 -->
+        <div class="card">
+          <div class="card-body" style="padding:24px;">
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="width:46px;height:46px;border-radius:var(--radius-md);background:#fcebeb;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="20" height="20" fill="none" stroke="#a32d2d" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;">
+                  <h3 style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy);">Predictive Modelling for Malaria Outbreaks</h3>
+                  <span class="badge badge-red">Revision Required</span>
+                </div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;">
+                  <span style="font-size:13px;color:var(--muted);">PhD · Epidemiology</span>
+                  <span style="font-size:13px;color:var(--muted);">Submitted Jan 8, 2026</span>
+                  <span style="font-size:13px;color:var(--muted);">v1.2</span>
+                </div>
+                <p style="font-size:13.5px;color:var(--navy);line-height:1.7;margin-bottom:16px;max-width:700px;">
+                  A data-driven approach to predicting seasonal malaria outbreaks across sub-Saharan Africa using satellite imagery, climate variables, and healthcare utilisation data…
+                </p>
+                <div style="background:#fcebeb;border-radius:var(--radius-md);padding:14px;border-left:3px solid #e24b4a;margin-bottom:16px;">
+                  <p style="font-size:13px;font-weight:500;color:#a32d2d;margin-bottom:4px;">Revision Required — Due March 20, 2026</p>
+                  <p style="font-size:13px;color:#a32d2d;">Chapter 3 methodology needs additional justification. Please address examiner comments and resubmit by the deadline.</p>
+                </div>
+                <div style="display:flex;gap:10px;">
+                  <a href="reviews.html" class="btn-primary" style="padding:8px 16px;font-size:13px;">View Comments</a>
+                  <a href="submit.html" class="btn-gold" style="padding:8px 16px;font-size:13px;">Upload Revision</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="api-base" content="http://localhost:5000/api" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Thesis — ThesisVault</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .step-content-panel { display: none; }
+    .step-content-panel.active { display: block; }
+    .keyword-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--cream-dark); border: 1px solid var(--border-strong);
+      padding: 4px 10px; border-radius: 20px; font-size: 13px; color: var(--navy);
+      margin: 4px; cursor: default;
+    }
+    .keyword-tag button { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 14px; line-height: 1; padding: 0; }
+    .keyword-tag button:hover { color: #e24b4a; }
+    #keyword-area { display: flex; flex-wrap: wrap; gap: 0; min-height: 36px; align-items: flex-start; padding-top: 4px; }
+    .step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar-placeholder"></div>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div>
+        <div class="topbar-title">Submit Thesis</div>
+        <span class="topbar-subtitle">New submission</span>
+      </div>
+      <div class="topbar-right">
+        <a href="index.html" class="btn-secondary">Cancel</a>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <!-- Progress steps -->
+      <div class="step-flow" id="step-flow">
+        <div class="step-item active" data-step="1">
+          <div class="step-circle">1</div>
+          <div class="step-name">Basic Info</div>
+        </div>
+        <div class="step-item" data-step="2">
+          <div class="step-circle">2</div>
+          <div class="step-name">Upload Files</div>
+        </div>
+        <div class="step-item" data-step="3">
+          <div class="step-circle">3</div>
+          <div class="step-name">Assign Reviewers</div>
+        </div>
+        <div class="step-item" data-step="4">
+          <div class="step-circle">4</div>
+          <div class="step-name">Declaration</div>
+        </div>
+        <div class="step-item" data-step="5">
+          <div class="step-circle">5</div>
+          <div class="step-name">Review & Submit</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Basic Info -->
+      <div class="card step-content-panel active" id="panel-1">
+        <div class="card-header">
+          <span class="card-title">Thesis Information</span>
+          <span style="font-size:12px;color:var(--muted);">Step 1 of 5</span>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Thesis Title <span class="required">*</span></label>
+            <input type="text" class="form-input" id="thesis-title" placeholder="Enter the full title of your thesis" />
+            <div class="form-hint">Use the official title as it will appear on your degree certificate.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Degree Type <span class="required">*</span></label>
+              <select class="form-select" id="degree-type">
+                <option value="">Select degree</option>
+                <option>PhD</option>
+                <option>MPhil</option>
+                <option>MSc by Research</option>
+                <option>Professional Doctorate</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Faculty / Department <span class="required">*</span></label>
+              <select class="form-select" id="department">
+                <option value="">Select department</option>
+                <option>Computer Science</option>
+                <option>Biochemistry</option>
+                <option>Architecture</option>
+                <option>Humanities</option>
+                <option>Economics</option>
+                <option>Law</option>
+                <option>Medicine</option>
+                <option>Engineering</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Abstract <span class="required">*</span></label>
+            <textarea class="form-textarea" id="abstract" style="min-height:160px;" placeholder="A concise summary of your thesis, its objectives, methodology, and findings (max 500 words)…"></textarea>
+            <div class="form-hint">Maximum 500 words. This will be publicly visible in the repository.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Academic Year</label>
+              <select class="form-select">
+                <option>2025–2026</option>
+                <option>2024–2025</option>
+                <option>2023–2024</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Language</label>
+              <select class="form-select">
+                <option>English</option>
+                <option>French</option>
+                <option>Arabic</option>
+                <option>Yoruba</option>
+                <option>Igbo</option>
+                <option>Hausa</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Keywords</label>
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+              <input type="text" class="form-input" id="keyword-input" placeholder="Add a keyword and press Enter" style="flex:1;" />
+              <button class="btn-secondary" type="button" onclick="addKeyword()" style="white-space:nowrap;">Add</button>
+            </div>
+            <div id="keyword-area"></div>
+            <div class="form-hint">Add 3–8 keywords to help index your thesis.</div>
+          </div>
+
+          <div class="step-nav">
+            <span></span>
+            <button class="btn-primary" onclick="goStep(2)">Next: Upload Files →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Upload Files -->
+      <div class="card step-content-panel" id="panel-2">
+        <div class="card-header">
+          <span class="card-title">Upload Thesis Files</span>
+          <span style="font-size:12px;color:var(--muted);">Step 2 of 5</span>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Thesis Document <span class="required">*</span></label>
+            <div class="upload-zone" id="thesis-zone">
+              <div class="upload-icon">📄</div>
+              <div class="upload-title">Drop your thesis file here</div>
+              <div class="upload-sub">PDF or DOCX · Maximum 100 MB</div>
+              <input type="file" id="thesis-file" accept=".pdf,.docx" style="display:none;" />
+            </div>
+          </div>
+
+          <div id="file-list-main"></div>
+
+          <div class="divider"></div>
+
+          <div class="form-group">
+            <label class="form-label">Supplementary Files <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+            <div class="upload-zone" id="supp-zone">
+              <div class="upload-icon">📎</div>
+              <div class="upload-title">Drop supplementary files here</div>
+              <div class="upload-sub">Datasets, appendices, figures · Max 200 MB total</div>
+              <input type="file" id="supp-file" multiple style="display:none;" />
+            </div>
+            <div id="file-list-supp" style="margin-top:10px;"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Ethics Approval Document</label>
+            <div class="upload-zone" id="ethics-zone" style="padding:20px 24px;">
+              <div class="upload-title" style="font-size:14px;">Upload ethics clearance certificate</div>
+              <div class="upload-sub">PDF · Required for research involving human participants</div>
+              <input type="file" id="ethics-file" accept=".pdf" style="display:none;" />
+            </div>
+            <div id="file-list-ethics" style="margin-top:10px;"></div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-secondary" onclick="goStep(1)">← Back</button>
+            <button class="btn-primary" onclick="goStep(3)">Next: Assign Reviewers →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Assign Reviewers -->
+      <div class="card step-content-panel" id="panel-3">
+        <div class="card-header">
+          <span class="card-title">Assign Reviewers</span>
+          <span style="font-size:12px;color:var(--muted);">Step 3 of 5</span>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Primary Supervisor <span class="required">*</span></label>
+            <select class="form-select">
+              <option value="">Select supervisor</option>
+              <option selected>Prof. Samuel Obi — Computer Science</option>
+              <option>Dr. Ngozi Eze — Biochemistry</option>
+              <option>Prof. Aisha Balogun — Engineering</option>
+              <option>Dr. Emmanuel Adeyemi — Law</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Co-Supervisor <span style="font-weight:400;color:var(--muted);">(optional)</span></label>
+            <select class="form-select">
+              <option value="">None</option>
+              <option>Dr. Tunde Okoye — Computer Science</option>
+              <option>Prof. Chioma Ikenna — Medicine</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Internal Examiner</label>
+            <select class="form-select">
+              <option value="">Select internal examiner</option>
+              <option>Dr. Funmi Adeyemi — Computer Science</option>
+              <option>Dr. Babatunde Fola — Engineering</option>
+              <option>Prof. Ifeanyi Okonkwo — Economics</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">External Examiner</label>
+            <select class="form-select">
+              <option value="">Select external examiner</option>
+              <option selected>Dr. Amina Nwosu — University of Lagos</option>
+              <option>Prof. Oluwaseun Bakare — Covenant University</option>
+            </select>
+          </div>
+
+          <div style="background:var(--cream);border-radius:var(--radius-md);padding:16px;border:1px solid var(--border);margin-top:8px;">
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;">
+              <strong style="color:var(--navy);">Note:</strong> Assigned reviewers will receive an email notification and will be able to access your thesis document once submitted. You can update reviewer assignments before final submission.
+            </p>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-secondary" onclick="goStep(2)">← Back</button>
+            <button class="btn-primary" onclick="goStep(4)">Next: Declaration →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Declaration -->
+      <div class="card step-content-panel" id="panel-4">
+        <div class="card-header">
+          <span class="card-title">Academic Integrity Declaration</span>
+          <span style="font-size:12px;color:var(--muted);">Step 4 of 5</span>
+        </div>
+        <div class="card-body">
+          <div style="background:var(--cream);border-radius:var(--radius-md);padding:24px;border:1px solid var(--border);margin-bottom:24px;line-height:1.8;font-size:14px;color:var(--navy);">
+            <p style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:16px;">Declaration of Authorship</p>
+            <p style="margin-bottom:12px;">I, <strong>Adaora Okafor</strong>, declare that the work contained in this thesis is my own original work and has not been submitted for any other degree or professional qualification.</p>
+            <p style="margin-bottom:12px;">I confirm that the work submitted is my own, except where work which has formed part of jointly authored publications has been included. My contribution and those of the other authors have been explicitly indicated below. I confirm that appropriate credit has been given within the thesis where reference has been made to the work of others.</p>
+            <p>I acknowledge that this work will be deposited in the university thesis repository and may be made available for public access once any embargo period has expired.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px;">
+            <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--navy);">
+              <input type="checkbox" id="dec1" style="margin-top:3px;width:16px;height:16px;flex-shrink:0;" />
+              <span>I confirm this thesis is entirely my own original work, or where other sources have been used, they are clearly attributed.</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--navy);">
+              <input type="checkbox" id="dec2" style="margin-top:3px;width:16px;height:16px;flex-shrink:0;" />
+              <span>I confirm this thesis has not been submitted for another degree at this or any other institution.</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--navy);">
+              <input type="checkbox" id="dec3" style="margin-top:3px;width:16px;height:16px;flex-shrink:0;" />
+              <span>I understand that if I am found to have engaged in misconduct, disciplinary action may be taken.</span>
+            </label>
+            <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:14px;color:var(--navy);">
+              <input type="checkbox" id="dec4" style="margin-top:3px;width:16px;height:16px;flex-shrink:0;" />
+              <span>I consent to my thesis being deposited in the university repository and made available for research purposes.</span>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Digital Signature (Full Name) <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="Type your full legal name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-input" value="2026-03-13" />
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-secondary" onclick="goStep(3)">← Back</button>
+            <button class="btn-primary" onclick="goStep(5)">Next: Review & Submit →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Review & Submit -->
+      <div class="card step-content-panel" id="panel-5">
+        <div class="card-header">
+          <span class="card-title">Review & Submit</span>
+          <span style="font-size:12px;color:var(--muted);">Step 5 of 5</span>
+        </div>
+        <div class="card-body">
+          <div style="background:var(--cream);border-radius:var(--radius-md);padding:20px;border:1px solid var(--border);margin-bottom:24px;">
+            <p style="font-size:13px;font-weight:500;color:var(--navy);margin-bottom:14px;">Submission Summary</p>
+            <div style="display:grid;grid-template-columns:160px 1fr;gap:10px 0;">
+              <span style="font-size:13px;color:var(--muted);">Title</span>
+              <span style="font-size:13px;color:var(--navy);font-weight:500;" id="sum-title">—</span>
+              <span style="font-size:13px;color:var(--muted);">Degree</span>
+              <span style="font-size:13px;color:var(--navy);" id="sum-degree">—</span>
+              <span style="font-size:13px;color:var(--muted);">Department</span>
+              <span style="font-size:13px;color:var(--navy);" id="sum-dept">—</span>
+              <span style="font-size:13px;color:var(--muted);">Supervisor</span>
+              <span style="font-size:13px;color:var(--navy);">Prof. Samuel Obi</span>
+              <span style="font-size:13px;color:var(--muted);">Files</span>
+              <span style="font-size:13px;color:var(--navy);">thesis_final.pdf</span>
+              <span style="font-size:13px;color:var(--muted);">Status</span>
+              <span><span class="badge badge-amber">Ready to submit</span></span>
+            </div>
+          </div>
+
+          <div style="background:#eaf3de;border-radius:var(--radius-md);padding:16px;border:1px solid #c0dd97;margin-bottom:24px;display:flex;gap:12px;">
+            <span style="font-size:20px;">✓</span>
+            <div>
+              <p style="font-size:14px;font-weight:500;color:#3b6d11;margin-bottom:4px;">All checks passed</p>
+              <p style="font-size:13px;color:#3b6d11;">Your submission is complete. Click "Submit Thesis" to send it to your review panel.</p>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button class="btn-secondary" onclick="goStep(4)">← Back</button>
+            <button class="btn-gold" onclick="submitThesis()" style="padding:11px 28px;font-size:15px;">
+              Submit Thesis ↗
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/app.js"></script>
+<script>
+let currentStep = 1;
+
+function goStep(n) {
+  document.querySelectorAll('.step-content-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + n).classList.add('active');
+
+  document.querySelectorAll('.step-item').forEach(el => {
+    const s = parseInt(el.dataset.step);
+    el.classList.remove('active', 'done');
+    if (s < n) el.classList.add('done');
+    else if (s === n) el.classList.add('active');
+    el.querySelector('.step-circle').textContent = s < n ? '✓' : s;
+  });
+
+  currentStep = n;
+
+  if (n === 5) {
+    document.getElementById('sum-title').textContent = document.getElementById('thesis-title').value || 'Not entered';
+    document.getElementById('sum-degree').textContent = document.getElementById('degree-type').value || 'Not selected';
+    document.getElementById('sum-dept').textContent = document.getElementById('department').value || 'Not selected';
+  }
+  window.scrollTo(0, 0);
+}
+
+function addKeyword() {
+  const input = document.getElementById('keyword-input');
+  const val = input.value.trim();
+  if (!val) return;
+  const area = document.getElementById('keyword-area');
+  const tag = document.createElement('span');
+  tag.className = 'keyword-tag';
+  tag.innerHTML = val + '<button onclick="this.parentElement.remove()" title="Remove">×</button>';
+  area.appendChild(tag);
+  input.value = '';
+  input.focus();
+}
+
+document.getElementById('keyword-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); addKeyword(); }
+});
+
+function submitThesis() {
+  showToast('Thesis submitted successfully! Your reviewers have been notified.', '🎓');
+  setTimeout(() => { window.location.href = 'submissions.html'; }, 2500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initUploadZone('thesis-zone', 'thesis-file', 'file-list-main');
+  initUploadZone('supp-zone', 'supp-file', 'file-list-supp');
+  initUploadZone('ethics-zone', 'ethics-file', 'file-list-ethics');
+});
+</script>
+</body>
+</html>
