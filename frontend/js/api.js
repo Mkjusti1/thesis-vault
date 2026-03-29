@@ -1,7 +1,7 @@
 // ThesisVault — API client
 // Reads API_BASE from meta tag or defaults to same-origin /api
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://thesis-vault.onrender.com/api';
 
 // ── Token helpers ──────────────────────────────────────────────────────────
 const getToken = () => localStorage.getItem('tv_token');
