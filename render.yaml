@@ -1,8 +1,7 @@
 # render.yaml — Deploy ThesisVault to Render.com
-# Docs: https://render.com/docs/blueprint-spec
 
 services:
-  # ── Node.js Backend API ──────────────────────────────────────────────────
+  # ── Node.js Backend API ────────────────────────────────────────────────
   - type: web
     name: thesisvault-api
     env: node
@@ -10,29 +9,25 @@ services:
     plan: free
     rootDir: backend
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: npm run migrate && npm start
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: thesisvault-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRES_IN
         value: 7d
       - key: CLIENT_URL
-        value: https://thesisvault.onrender.com
+        value: https://thesisvault-frontend.onrender.com
       - key: MAX_FILE_SIZE_MB
-        value: "100"
+        value: '100'
       - key: UPLOAD_DIR
         value: uploads
-      # Add your SMTP settings manually in the Render dashboard:
-      # SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, EMAIL_FROM
 
-  # ── Static Frontend ──────────────────────────────────────────────────────
+  # ── Static Frontend ────────────────────────────────────────────────────
   - type: web
     name: thesisvault-frontend
     env: static
@@ -47,11 +42,6 @@ services:
       - type: rewrite
         source: /api/*
         destination: https://thesisvault-api.onrender.com/api/$1
-
-# ── PostgreSQL Database ──────────────────────────────────────────────────
-databases:
-  - name: thesisvault-db
-    databaseName: thesisvault
-    user: thesisvault_user
-    plan: free
-    region: oregon
+      - type: rewrite
+        source: /*
+        destination: /index.html
